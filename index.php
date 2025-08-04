@@ -1,107 +1,68 @@
-<<<<<<< HEAD
-<html>
-<head>
-	<title>Lista de Alumnos</title>
-	
-	<!--Funcion de control, que permite solicitar al usuario que confirme si desea realmente eliminar el registro-->
-
-	<script type="text/javascript"> 
-		function confirmar(){
-			return confirm ('Estas seguro? Se eliminaran los datos');
-		}
-		</script>
-
-=======
 <!DOCTYPE html>
-<html>
+<html lang="es">
 <head>
+    <meta charset="UTF-8">
     <title>Lista de Alumnos</title>
-    <link rel="stylesheet" href="estilos.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+
+        h1 {
+            color: #003366;
+        }
+
+        table {
+            border-collapse: collapse;
+            width: 80%;
+        }
+
+        th, td {
+            border: 1px solid #333;
+            padding: 10px;
+            text-align: center;
+        }
+
+        th {
+            background-color: #003366;
+            color: white;
+        }
+
+        a {
+            margin: 0 5px;
+            text-decoration: none;
+            color: #0066cc;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        .add-link {
+            display: inline-block;
+            margin-bottom: 15px;
+            font-weight: bold;
+        }
+    </style>
+
     <script type="text/javascript">
         function confirmar() {
-            return confirm('¿Estás seguro? Se eliminarán los datos');
+            return confirm('¿Estás seguro? Se eliminarán los datos.');
         }
     </script>
->>>>>>> bd08a9b30c7262d9f4dd16741e660f383fd68e9b
 </head>
 <body>
 
 <?php
-<<<<<<< HEAD
+    include("conexion.php");
 
-	include("conexion.php"); //conectar con la BD
-
-
-
-	$sql="Select * from alumnos"; 	//Para Hacer Consultas, recuperar, traer los datos de la tabla alumno
-	
-	$resultado=mysqli_query($conexion, $sql); // Variable que contiene la consulta a la base datos (tanto conexion como registros de la tabla)
-?>
-
-	<h1>Lista de Alumnos</h1>
-	<a href="Agregar.php">Agregar Alumno</a><br><br>
-	<table>
-		<thead>
-			<tr>
-			
-				<th>Id</th>  <!--Definir las columnas que necesito de acuerdo a la cantidad de campos que quiera utilizar (encabezados)-->
-				<th>Nombre</th>
-				<th>No. Control</th>
-				<th>Acciones</th>
-			</tr>
-		</thead>
-		<tbody>
-
-			<?php
-				while ($filas=mysqli_fetch_assoc($resultado)) { //el while es una sentencia de repeticion que me permite capturar la cantidad de filas que existe en la tabla, y mysq mysqli_fetch_assoc extrae una fila del resultado como un array o vector.
-					?>
-			<tr>
-
-			<!--Definir columnas para mostrar los registos de los campos definidos en la etiquete <th></th>	(despues del encabezados) y traer los datos de la BD a mostrar-->
-
-				<td>	<?php  echo $filas ['id_alumno']  ?>	</td> <!-- echo muestra la información que esta en la variables filas obtenida por el while -->
-				<td>	<?php  echo $filas ['nom_alumno']  ?>	</td>
-				<td>	<?php  echo $filas ['ncon_alumno']  ?>	</td>
-			
-			
-			<!--en la ultima columna se definen dos vinculos editar y eliminar-->
-			
-				<td>
-
-<!--   Esto sirve para saber qué alumno se va a editar -->
-<!--  $filas['id_alumno'] obtiene el ID del alumno actual desde el array $filas -->
-
-<?php echo "<a href='editar.php?id_alumno=".$filas['id_alumno']."'>EDITAR</a>";  ?>
-					-
-<?php echo "<a href='eliminar.php?id_alumno=".$filas['id_alumno']."' onclick='return confirmar()'>ELIMINAR</a>"; ?>
-				</td>
-			</tr>
-<?php
-			}
-?>
-
-		</tbody>
-
-	</table>
-<?php
-		mysqli_close($conexion);
-?>
-
-
-</body>
-
-
-
-</html>
-=======
-include("conexion.php");
-
-$sql = "SELECT * FROM alumnos";
-$resultado = mysqli_query($conexion, $sql);
+    $sql = "SELECT * FROM alumnos";
+    $resultado = mysqli_query($conexion, $sql);
 ?>
 
 <h1>Lista de Alumnos</h1>
-<a href="agregar.php" class="boton">Agregar Alumno</a><br><br>
+<a class="add-link" href="agregar.php">➕ Agregar Alumno</a>
 
 <table>
     <thead>
@@ -113,16 +74,16 @@ $resultado = mysqli_query($conexion, $sql);
         </tr>
     </thead>
     <tbody>
-        <?php while ($filas = mysqli_fetch_assoc($resultado)) { ?>
-            <tr>
-                <td><?php echo $filas['id_alumno']; ?></td>
-                <td><?php echo $filas['nom_alumno']; ?></td>
-                <td><?php echo $filas['ncon_alumno']; ?></td>
-                <td>
-                    <a href="editar.php?id_alumno=<?php echo $filas['id_alumno']; ?>">Editar</a> -
-                    <a href="eliminar.php?id_alumno=<?php echo $filas['id_alumno']; ?>" onclick="return confirmar()">Eliminar</a>
-                </td>
-            </tr>
+        <?php while ($fila = mysqli_fetch_assoc($resultado)) { ?>
+        <tr>
+            <td><?php echo $fila['id_alumno']; ?></td>
+            <td><?php echo $fila['nom_alumno']; ?></td>
+            <td><?php echo $fila['ncon_alumno']; ?></td>
+            <td>
+                <a href="editar.php?id_alumno=<?php echo $fila['id_alumno']; ?>">✏️ Editar</a> |
+                <a href="eliminar.php?id_alumno=<?php echo $fila['id_alumno']; ?>" onclick="return confirmar()">🗑️ Eliminar</a>
+            </td>
+        </tr>
         <?php } ?>
     </tbody>
 </table>
@@ -131,4 +92,3 @@ $resultado = mysqli_query($conexion, $sql);
 
 </body>
 </html>
->>>>>>> bd08a9b30c7262d9f4dd16741e660f383fd68e9b
